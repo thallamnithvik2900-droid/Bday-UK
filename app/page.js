@@ -197,6 +197,10 @@ export default function Home() {
             <div className="tiny">ONLY YOU CAN ENTER</div>
             <h2>A tiny secret...</h2>
             <p className="sub">Enter the four-digit code.</p>
+            <div className="code-tease" aria-label="A playful hint">
+              <span>Ok, Fine 😌</span>
+              <span>Dhobhey 😜</span>
+            </div>
 
             <div className="dots">
               {Array.from({ length: CODE_LENGTH }, (_, i) => i).map((i) => (

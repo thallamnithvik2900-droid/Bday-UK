@@ -197,6 +197,23 @@ body {
     margin: 5px 0 22px
 }
 
+.code-tease {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: -12px 0 4px;
+}
+
+.code-tease span {
+    padding: 7px 11px;
+    border: 1px solid #8d5366;
+    border-radius: 999px;
+    color: #f0bac7;
+    background: #241019aa;
+    font: 500 12px "DM Sans", sans-serif;
+}
+
 .dots span {
     width: 13px;
     height: 13px;
