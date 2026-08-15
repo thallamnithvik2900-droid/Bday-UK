@@ -13,11 +13,41 @@ const PHOTOS = [
 const CONFIG = {
   herName: "Somyaaaaaaaaa",
   secretCode: "2017",
+  dateOfBirth: new Date(2007, 7, 2),
   letter:
-    "You deserve all the happiness, laughter and beautiful memories this year can bring. I made this little surprise just for you, because you are someone worth celebrating every single day. Happy Birthday ❤️",
+    "Every moment spent with you feels like a precious gift that keeps giving back to my heart. Your kindness lights up the darkest days, and your smile reminds me why life is so beautifully worth living. On this special day, I want you to know that having you in this world makes everything brighter. May this year bring you infinite joy, unexpected adventures, and dreams that come true. Thank you for being the extraordinary soul that you are. You deserve nothing but the very best. With all my love and admiration ✨",
 };
 
 const CODE_LENGTH = CONFIG.secretCode.length;
+
+// Sliding puzzle initialization - empty space is represented as null
+function generateSolvablePuzzle() {
+  const puzzle = [0, 1, 2, 3, 4, 5, 6, 7, null];
+  for (let i = 0; i < 100; i++) {
+    const emptyIdx = puzzle.indexOf(null);
+    const row = Math.floor(emptyIdx / 3);
+    const col = emptyIdx % 3;
+    const adjacent = [];
+    if (row > 0) adjacent.push(emptyIdx - 3);
+    if (row < 2) adjacent.push(emptyIdx + 3);
+    if (col > 0) adjacent.push(emptyIdx - 1);
+    if (col < 2) adjacent.push(emptyIdx + 1);
+    const swapIdx = adjacent[Math.floor(Math.random() * adjacent.length)];
+    [puzzle[emptyIdx], puzzle[swapIdx]] = [puzzle[swapIdx], puzzle[emptyIdx]];
+  }
+  return puzzle;
+}
+
+const INITIAL_PUZZLE = generateSolvablePuzzle();
+
+const WISHES = [
+  "May your smile always shine this bright ✨",
+  "You deserve every beautiful thing today 💖",
+  "May all your dreams find their way to you 🌟",
+  "Keep being the wonderfully amazing you 🌸",
+  "Here’s to a year full of love and laughter 🥂",
+];
+const BALLOON_COLORS = ["#c78cff, #8a4eda", "#90f18b, #3cbf66", "#ffb1c4, #ed5b83", "#ffe88d, #efae35", "#ff9fca, #e34077"];
 
 export default function Home() {
   const [screen, setScreen] = useState(0);
@@ -27,11 +57,74 @@ export default function Home() {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
+  const [now, setNow] = useState(() => new Date());
+  const [puzzleTiles, setPuzzleTiles] = useState(INITIAL_PUZZLE);
+  const [wishMessage, setWishMessage] = useState("");
   const audioRef = useRef(null);
 
-  const balloons = useMemo(() => Array.from({ length: 12 }, (_, i) => i), []);
+  const balloons = useMemo(() => Array.from({ length: WISHES.length }, (_, i) => i), []);
+  const birthdayStats = useMemo(() => getBirthdayStats(CONFIG.dateOfBirth, now), [now]);
+
+  // Check if puzzle is solved
+  const puzzleSolved = useMemo(() => {
+    return puzzleTiles.every((tile, idx) => idx === 8 ? tile === null : tile === idx);
+  }, [puzzleTiles]);
 
   const go = (n) => setScreen(n);
+
+  // Sliding puzzle: drag adjacent tile to move it into empty space
+  const handlePuzzleDrag = (index, info) => {
+    const emptyIdx = puzzleTiles.indexOf(null);
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    const emptyRow = Math.floor(emptyIdx / 3);
+    const emptyCol = emptyIdx % 3;
+
+    // Check if adjacent (horizontally or vertically)
+    const isAdjacent = (Math.abs(row - emptyRow) === 1 && col === emptyCol) ||
+      (Math.abs(col - emptyCol) === 1 && row === emptyRow);
+
+    if (!isAdjacent) return;
+
+    // Check drag direction and distance
+    const { offset } = info;
+    const threshold = 25;
+
+    // Determine which direction to move
+    if (Math.abs(offset.y) > Math.abs(offset.x)) {
+      // Vertical drag
+      if (row < emptyRow && offset.y > threshold) {
+        // Dragged down toward empty space below
+        const newTiles = [...puzzleTiles];
+        [newTiles[index], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[index]];
+        setPuzzleTiles(newTiles);
+      } else if (row > emptyRow && offset.y < -threshold) {
+        // Dragged up toward empty space above
+        const newTiles = [...puzzleTiles];
+        [newTiles[index], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[index]];
+        setPuzzleTiles(newTiles);
+      }
+    } else {
+      // Horizontal drag
+      if (col < emptyCol && offset.x > threshold) {
+        // Dragged right toward empty space
+        const newTiles = [...puzzleTiles];
+        [newTiles[index], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[index]];
+        setPuzzleTiles(newTiles);
+      } else if (col > emptyCol && offset.x < -threshold) {
+        // Dragged left toward empty space
+        const newTiles = [...puzzleTiles];
+        [newTiles[index], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[index]];
+        setPuzzleTiles(newTiles);
+      }
+    }
+  };
+
+  const popBalloon = (index) => {
+    if (popped.includes(index)) return;
+    setWishMessage(WISHES[popped.length]);
+    setPopped((items) => [...items, index]);
+  };
 
   const unlock = () => {
     if (code === CONFIG.secretCode) {
@@ -69,7 +162,11 @@ export default function Home() {
     }
   }, [musicOn]);
   useEffect(() => {
-    if (!revealed && screen === 5) {
+    const timer = setInterval(() => setNow(new Date()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+  useEffect(() => {
+    if (!revealed && screen === 7) {
       setTimeout(() => {
         const canvas = document.querySelector(".scratch-canvas");
         if (canvas) {
@@ -220,30 +317,124 @@ export default function Home() {
         )}
 
         {screen === 2 && (
-          <Page key="2">
-            <div className="tiny">TODAY IS ALL ABOUT YOU</div>
-            <h1 className="birthday">Happy Birthday<br /><em>{CONFIG.herName}</em> ❤️</h1>
-
-            <div className="cake">
-              <div className="candle"><span>✦</span></div>
-              <div className="icing" />
-              <div className="cake-base" />
-              <div className="plate" />
+          <Page key="2" className="birthday-reveal">
+            <div className="curtain curtain-left" aria-hidden="true" />
+            <div className="curtain curtain-right" aria-hidden="true" />
+            <div className="curtain-swag" aria-hidden="true" />
+            <div className="reveal-content">
+              <div className="tiny">THE SPOTLIGHT IS ALL YOURS</div>
+              <p className="reveal-kicker">POV: IT&apos;S HER BIRTHDAY</p>
+              <h1 className="birthday">Happy Birthday<br /><em>{CONFIG.herName}</em> ❤️</h1>
+              <div className="cake">
+                <div className="candle"><span>✦</span></div>
+                <div className="icing" />
+                <div className="cake-base" />
+                <div className="plate" />
+              </div>
+              <p className="sub">May your day be as beautiful as your smile.</p>
+              <button className="pink-btn" onClick={() => go(3)}>OPEN THE CELEBRATION ✨</button>
             </div>
-
-            <p className="sub">May your day be as beautiful as your smile.</p>
-            <button className="pink-btn" onClick={() => go(3)}>KEEP GOING ✨</button>
           </Page>
         )}
 
         {screen === 3 && (
-          <Page key="3">
-            <div className="tiny">A LITTLE GAME</div>
-            <h2>Pop the balloons 🎈</h2>
-            <p className="sub">Pop every balloon to unlock the next surprise.</p>
-            <div className="count">{popped.length} / 12</div>
+          <Page key="3" className="birthday-clock">
+            <div className="clock-ribbon ribbon-one" aria-hidden="true" />
+            <div className="clock-ribbon ribbon-two" aria-hidden="true" />
+            <div className="clock-content">
+              <div className="tiny">A DAY WORTH CELEBRATING</div>
+              <h2>Happy Birthday<br /><em>{CONFIG.herName}</em> 👑</h2>
+              <p className="born-on">Born on 02 August 2007</p>
+              <p className="clock-intro">The world has been brighter for</p>
+              <div className="birthday-stats" aria-label="Time since birth">
+                {Object.entries(birthdayStats).map(([label, value]) => (
+                  <div key={label}>
+                    <strong>{value.toLocaleString()}</strong>
+                    <span>{label}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="celebration-cake" aria-label="Birthday cake">
+                <span className="flame flame-one">✦</span>
+                <span className="flame flame-two">✦</span>
+                <div className="cake-top" />
+                <div className="cake-middle" />
+                <div className="cake-bottom" />
+                <div className="cake-plate" />
+              </div>
+              <p className="blow-note">MAKE A WISH AND BLOW THE CANDLES ✨</p>
+              <button className="pink-btn" onClick={() => go(4)}>CONTINUE THE PARTY →</button>
+            </div>
+          </Page>
+        )}
 
-            <div className="balloons">
+        {screen === 4 && (
+          <Page key="4" className="photo-puzzle-page">
+            <div className="tiny">A SPECIAL MEMORY</div>
+            <h2>Birthday Puzzle 🧩</h2>
+            <p className="sub">Drag the pieces to slide them into place.</p>
+            <div className="puzzle-reference">
+              <img src="/photos/photo1.jpg" alt="Reference for the completed photo puzzle" />
+              <span>REFERENCE PHOTO</span>
+            </div>
+            <div className="puzzle-progress">
+              {puzzleTiles.filter((piece) => piece !== null).length} / 8 PIECES SOLVED
+            </div>
+            <p className="puzzle-hint">
+              {puzzleSolved ? "✓ Puzzle Complete!" : "Drag pieces toward the empty space"}
+            </p>
+            <div className="photo-puzzle" aria-label="Photo tile puzzle">
+              {puzzleTiles.map((piece, index) => (
+                <motion.button
+                  key={index}
+                  type="button"
+                  className={`puzzle-tile ${piece === null ? "empty" : ""}`}
+                  style={piece !== null ? { backgroundPosition: `${(piece % 3) * 50}% ${Math.floor(piece / 3) * 50}%` } : {}}
+                  drag={piece !== null}
+                  dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(event, info) => handlePuzzleDrag(index, info)}
+                  whileDrag={{ scale: 1.05, zIndex: 10 }}
+                  animate={{ opacity: piece !== null ? 1 : 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  aria-label={piece !== null ? `Puzzle piece ${piece + 1}` : "Empty space"}
+                />
+              ))}
+            </div>
+            {puzzleSolved ? (
+              <button className="pink-btn" onClick={() => go(5)}>PICTURE PERFECT →</button>
+            ) : (
+              <button
+                type="button"
+                className="puzzle-reset"
+                onClick={() => setPuzzleTiles(generateSolvablePuzzle())}
+              >
+                RESET PUZZLE
+              </button>
+            )}
+          </Page>
+        )}
+
+        {screen === 5 && (
+          <Page key="5" className="wish-page">
+            <div className="tiny">A LITTLE WISH FOR YOU</div>
+            <h2>Pop the Wishes 🎈</h2>
+            <p className="sub">Tap each balloon to reveal a little birthday wish.</p>
+            <AnimatePresence mode="wait">
+              {wishMessage && (
+                <motion.p
+                  key={wishMessage}
+                  className="wish-message"
+                  initial={{ opacity: 0, y: 12, scale: .92 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8 }}
+                >
+                  {wishMessage}
+                </motion.p>
+              )}
+            </AnimatePresence>
+
+            <div className="balloons wish-balloons">
               {balloons.map((i) =>
                 popped.includes(i) ? null : (
                   <motion.button
@@ -252,22 +443,24 @@ export default function Home() {
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     whileTap={{ scale: 1.35, opacity: 0 }}
-                    onClick={() => setPopped((p) => [...p, i])}
+                    onClick={() => popBalloon(i)}
+                    style={{ background: `radial-gradient(circle at 30% 25%, #fff8, ${BALLOON_COLORS[i]})` }}
                   >
                     <span>♥</span>
                   </motion.button>
                 )
               )}
             </div>
+            <div className="count">POPPED {popped.length} / {balloons.length}</div>
 
-            {popped.length === 12 && (
-              <button className="pink-btn" onClick={() => go(4)}>YOU DID IT →</button>
+            {popped.length === balloons.length && (
+              <button className="pink-btn" onClick={() => go(6)}>YOU DID IT →</button>
             )}
           </Page>
         )}
 
-        {screen === 4 && (
-          <Page key="4">
+        {screen === 6 && (
+          <Page key="6">
             <div className="tiny">OUR MEMORIES</div>
             <h2>A little piece of us 🧩</h2>
             <p className="sub">Tap the cards and reveal the memories.</p>
@@ -300,7 +493,7 @@ export default function Home() {
               className="pink-btn screen-four-next"
               onClick={() => {
                 setRevealed(false);
-                go(5);
+                go(7);
               }}
             >
               ONE MORE SURPRISE →
@@ -308,8 +501,8 @@ export default function Home() {
           </Page>
         )}
 
-        {screen === 5 && (
-          <Page key="5">
+        {screen === 7 && (
+          <Page key="7">
             <div className="tiny">JUST FOR YOU</div>
             <h2>There is a message hidden here...</h2>
             <p className="sub">Scratch the card to reveal your message.</p>
@@ -332,19 +525,19 @@ export default function Home() {
               )}
             </div>
 
-            {revealed && <button className="pink-btn" onClick={() => go(6)}>READ THE LETTER 💌</button>}
+            {revealed && <button className="pink-btn" onClick={() => go(8)}>READ THE LETTER 💌</button>}
             {!revealed && <p style={{ fontSize: '12px', color: '#cba9b3', marginTop: '10px' }}>Tap the cover to open your surprise</p>}
           </Page>
         )}
 
-        {screen === 6 && (
-          <Page key="6">
+        {screen === 8 && (
+          <Page key="8">
             <div className="letter">
               <div className="tiny">A LETTER FOR YOU</div>
-              <h2>Happy Birthday ❤️</h2>
+              <h2>Happy Birthday ✨</h2>
               <div className="rule" />
               <p>{CONFIG.letter}</p>
-              <p className="hand">With lots of love,<br />from me ❤️</p>
+              <p className="hand">With lots of love,<br />from me 🌸</p>
             </div>
             <button className="outline-btn" onClick={() => go(0)}>START AGAIN ↻</button>
           </Page>
@@ -354,10 +547,25 @@ export default function Home() {
   );
 }
 
-function Page({ children }) {
+function getBirthdayStats(dateOfBirth, now) {
+  let years = now.getFullYear() - dateOfBirth.getFullYear();
+  const birthdayThisYear = new Date(now.getFullYear(), dateOfBirth.getMonth(), dateOfBirth.getDate());
+  if (now < birthdayThisYear) years--;
+
+  const elapsed = Math.max(0, now.getTime() - dateOfBirth.getTime());
+  const totalMinutes = Math.floor(elapsed / 60_000);
+  return {
+    years,
+    days: Math.floor(elapsed / 86_400_000),
+    hours: Math.floor(totalMinutes / 60) % 24,
+    minutes: totalMinutes % 60,
+  };
+}
+
+function Page({ children, className = "" }) {
   return (
     <motion.section
-      className="page"
+      className={`page ${className}`}
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -28 }}
