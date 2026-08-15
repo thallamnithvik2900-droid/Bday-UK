@@ -17,7 +17,7 @@ Open `app/page.js` and edit:
 ```js
 const CONFIG = {
   herName: "Beautiful",
-  secretCode: "143",
+  secretCode: "0200",
   letter: "Your personal message..."
 };
 ```

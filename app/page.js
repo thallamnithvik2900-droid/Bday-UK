@@ -11,11 +11,13 @@ const PHOTOS = [
 ].reverse();
 
 const CONFIG = {
-  herName: "Somyaaaaaaaaa",
-  secretCode: "020",
+  herName: "Somyaaaaaaaaa😎🤞",
+  secretCode: "2017",
   letter:
     "You deserve all the happiness, laughter and beautiful memories this year can bring. I made this little surprise just for you, because you are someone worth celebrating every single day. Happy Birthday ❤️",
 };
+
+const CODE_LENGTH = CONFIG.secretCode.length;
 
 export default function Home() {
   const [screen, setScreen] = useState(0);
@@ -43,7 +45,7 @@ export default function Home() {
   const press = (n) => {
     if (n === "back") return setCode((v) => v.slice(0, -1));
     if (n === "ok") return unlock();
-    if (code.length < 3) setCode((v) => v + n);
+    if (code.length < CODE_LENGTH) setCode((v) => v + n);
   };
 
   useEffect(() => {
@@ -194,10 +196,10 @@ export default function Home() {
             <div className="lock">♡</div>
             <div className="tiny">ONLY YOU CAN ENTER</div>
             <h2>A tiny secret...</h2>
-            <p className="sub">Enter the three-digit code.</p>
+            <p className="sub">Enter the four-digit code.</p>
 
             <div className="dots">
-              {[0, 1, 2].map((i) => (
+              {Array.from({ length: CODE_LENGTH }, (_, i) => i).map((i) => (
                 <span key={i} className={code.length > i ? "filled" : ""} />
               ))}
             </div>
