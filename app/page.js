@@ -56,7 +56,7 @@ export default function Home() {
   const [popped, setPopped] = useState([]);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
-  const [musicOn, setMusicOn] = useState(false);
+  const [musicOn, setMusicOn] = useState(true);
   const [now, setNow] = useState(() => new Date());
   const [puzzleTiles, setPuzzleTiles] = useState(INITIAL_PUZZLE);
   const [wishMessage, setWishMessage] = useState("");
