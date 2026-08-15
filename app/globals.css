@@ -511,6 +511,31 @@ body {
     cursor: pointer;
 }
 
+.puzzle-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.puzzle-solve {
+    border: 1px solid #ffb36f;
+    border-radius: 999px;
+    padding: 11px 18px;
+    background: linear-gradient(90deg, #a7375c, #d65b78);
+    color: #fff4df;
+    font: 700 10px "DM Sans", sans-serif;
+    letter-spacing: .13em;
+    cursor: pointer;
+    box-shadow: 0 8px 18px #00000033;
+}
+
+.puzzle-solve:hover,
+.puzzle-reset:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+}
+
 .wish-page {
     min-height: min(690px, calc(100vh - 50px));
     justify-content: center;

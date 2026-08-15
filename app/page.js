@@ -59,6 +59,7 @@ export default function Home() {
   const [musicOn, setMusicOn] = useState(true);
   const [now, setNow] = useState(() => new Date());
   const [puzzleTiles, setPuzzleTiles] = useState(INITIAL_PUZZLE);
+  const [showAutoSolve, setShowAutoSolve] = useState(false);
   const [wishMessage, setWishMessage] = useState("");
   const audioRef = useRef(null);
 
@@ -71,6 +72,7 @@ export default function Home() {
   }, [puzzleTiles]);
 
   const go = (n) => setScreen(n);
+  const solvePuzzle = () => setPuzzleTiles([0, 1, 2, 3, 4, 5, 6, 7, null]);
 
   // Sliding puzzle: drag adjacent tile to move it into empty space
   const handlePuzzleDrag = (index, info) => {
@@ -165,6 +167,15 @@ export default function Home() {
     const timer = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(timer);
   }, []);
+  useEffect(() => {
+    if (screen !== 4 || puzzleSolved) {
+      setShowAutoSolve(false);
+      return;
+    }
+
+    const timer = setTimeout(() => setShowAutoSolve(true), 10_000);
+    return () => clearTimeout(timer);
+  }, [screen, puzzleSolved]);
   useEffect(() => {
     if (!revealed && screen === 7) {
       setTimeout(() => {
@@ -404,13 +415,20 @@ export default function Home() {
             {puzzleSolved ? (
               <button className="pink-btn" onClick={() => go(5)}>PICTURE PERFECT →</button>
             ) : (
-              <button
-                type="button"
-                className="puzzle-reset"
-                onClick={() => setPuzzleTiles(generateSolvablePuzzle())}
-              >
-                RESET PUZZLE
-              </button>
+              <div className="puzzle-actions">
+                <button
+                  type="button"
+                  className="puzzle-reset"
+                  onClick={() => setPuzzleTiles(generateSolvablePuzzle())}
+                >
+                  RESET PUZZLE
+                </button>
+                {showAutoSolve && (
+                  <button type="button" className="puzzle-solve" onClick={solvePuzzle}>
+                    AUTO-SOLVE PUZZLE
+                  </button>
+                )}
+              </div>
             )}
           </Page>
         )}
