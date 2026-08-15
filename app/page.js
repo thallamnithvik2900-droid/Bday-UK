@@ -11,7 +11,7 @@ const PHOTOS = [
 ].reverse();
 
 const CONFIG = {
-  herName: "Somyaaaaaaaaa😎🤞",
+  herName: "Somyaaaaaaaaa",
   secretCode: "2017",
   letter:
     "You deserve all the happiness, laughter and beautiful memories this year can bring. I made this little surprise just for you, because you are someone worth celebrating every single day. Happy Birthday ❤️",
