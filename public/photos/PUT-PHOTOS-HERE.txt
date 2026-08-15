@@ -1,0 +1,13 @@
+Replace these placeholder instructions with your own images.
+
+Use exactly these filenames:
+photo1.jpg
+photo2.jpg
+photo3.jpg
+photo4.jpg
+
+Put them inside this folder:
+public/photos/
+
+You can use JPG, PNG or WEBP, but if you change the filename,
+also change the PHOTOS array in app/page.js.
