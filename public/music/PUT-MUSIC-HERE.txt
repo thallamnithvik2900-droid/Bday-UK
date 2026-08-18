@@ -1,0 +1,4 @@
+Optional:
+Put your birthday song here as birthday.mp3.
+The demo music button is visual only; you can connect the audio
+element in app/page.js if you want autoplay/playback.li
