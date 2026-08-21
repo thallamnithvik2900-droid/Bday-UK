@@ -12,7 +12,7 @@ const PHOTOS = [
 
 const CONFIG = {
   herName: "Somyaaaaaaaaa",
-  secretCode: "2582",
+  secretCode: "2017",
   dateOfBirth: new Date(2007, 7, 2),
   letter:
     "Every moment spent with you feels like a precious gift that keeps giving back to my heart. Your kindness lights up the darkest days, and your smile reminds me why life is so beautifully worth living. On this special day, I want you to know that having you in this world makes everything brighter. May this year bring you infinite joy, unexpected adventures, and dreams that come true. Thank you for being the extraordinary soul that you are. You deserve nothing but the very best. With all my love and admiration ✨",
