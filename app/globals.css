@@ -468,7 +468,7 @@ body {
     border: 1px solid #ffd3df44;
     border-radius: 9px;
     cursor: grab;
-    background-image: url("/photos/photo1.jpg");
+    background-image: url("/photos/photo2.jpeg");
     background-size: 300% 300%;
     background-repeat: no-repeat;
     box-shadow: inset 0 0 0 1px #0003, 0 4px 12px #00000033;
@@ -734,21 +734,21 @@ body {
     margin: 5px 0 22px
 }
 
-.code-tease {
+.friend-badge {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 8px;
-    margin: -12px 0 4px;
-}
-
-.code-tease span {
-    padding: 7px 11px;
-    border: 1px solid #8d5366;
+    margin: -6px 0 8px;
+    padding: 8px 13px;
+    border: 1px solid #d57b98;
     border-radius: 999px;
-    color: #f0bac7;
-    background: #241019aa;
-    font: 500 12px "DM Sans", sans-serif;
+    color: #ffd5df;
+    background: linear-gradient(90deg, #3b1728, #64223b, #3b1728);
+    font: 700 10px "DM Sans", sans-serif;
+    letter-spacing: .14em;
+    box-shadow: 0 8px 22px #0003;
 }
 
 .dots span {
@@ -1169,4 +1169,136 @@ body {
     .letter h2 {
         font-size: 46px
     }
+}
+
+/* Friendship theme */
+.stage {
+    background: radial-gradient(circle at 50% 35%, #164b58 0, #102b3c 45%, #08151f 86%);
+}
+
+.stage:before {
+    background: radial-gradient(circle at 18% 18%, #ffbd5926, transparent 25%), radial-gradient(circle at 82% 72%, #36c9b326, transparent 30%);
+}
+
+.tiny {
+    color: #72d9c6;
+}
+
+.birthday em,
+.birthday-reveal .birthday em {
+    color: #ffd166;
+}
+
+.pink-btn {
+    border-color: #ffb45c;
+    background: linear-gradient(90deg, #ed6847, #f3a447);
+    color: #fff9e8;
+    box-shadow: 0 12px 35px #e8773a3d;
+}
+
+.outline-btn {
+    border-color: #4daea8;
+    color: #9ae4d2;
+}
+
+.music {
+    border-color: #4daea8;
+    background: #102f3a;
+    color: #ffd166;
+}
+
+.gift-body {
+    background: linear-gradient(135deg, #ef7650, #c74643);
+}
+
+.gift-body i {
+    background: #ffd166;
+}
+
+.gift-body b {
+    background: #ffb45c;
+}
+
+.gift-lid {
+    background: #f28b54;
+}
+
+.gift-lid span {
+    color: #ffd166;
+}
+
+.lock {
+    color: #ffd166;
+}
+
+.dots span {
+    border-color: #4daea8;
+}
+
+.dots .filled {
+    background: #ff8a5b;
+    box-shadow: 0 0 14px #ff8a5b77;
+}
+
+.keypad button {
+    border-color: #24586a;
+    background: #102b3c;
+}
+
+.keypad button:hover {
+    background: #1d5260;
+}
+
+.wrong {
+    color: #ffb45c;
+}
+
+.birthday-reveal {
+    border-color: #e8794f;
+    background: radial-gradient(ellipse at 50% 52%, #17606a 0, #123547 48%, #08151f 100%);
+}
+
+.curtain,
+.curtain-swag {
+    background: repeating-linear-gradient(90deg, #0d3949 0 8%, #16717a 12%, #e8794f 22%, #14505d 35%, #082530 47% 54%);
+}
+
+.birthday-clock,
+.photo-puzzle-page,
+.wish-page {
+    background: radial-gradient(circle at 50% 40%, #17606a 0, #123547 53%, #08151f 100%);
+}
+
+.birthday-clock h2,
+.photo-puzzle-page h2,
+.wish-page h2 {
+    color: #ffd166;
+}
+
+.birthday-clock h2 em {
+    color: #ff9b62;
+}
+
+.cake-base {
+    background: linear-gradient(#f28b54, #c74643);
+}
+
+.icing {
+    background: #ffe3a3;
+    box-shadow: 0 7px 0 #e8794f;
+}
+
+.plate {
+    background: #4daea8;
+}
+
+.friend-badge {
+    border-color: #4daea8;
+    background: linear-gradient(90deg, #123547, #17606a, #123547);
+    color: #ffd166;
+}
+
+.particles i {
+    background: #ffd166;
+    box-shadow: 0 0 10px #ffd166;
 }

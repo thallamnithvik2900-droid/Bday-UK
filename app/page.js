@@ -4,18 +4,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const PHOTOS = [
-  "/photos/photo1.jpg",
-  "/photos/photo2.jpg",
-  "/photos/photo3.jpg",
-  "/photos/photo4.jpg",
+  "/photos/photo1.jpeg",
+  "/photos/photo2.jpeg",
+  "/photos/photo3.jpeg",
+  "/photos/photo4.jpeg",
 ].reverse();
 
 const CONFIG = {
-  herName: "Somyaaaaaaaaa",
-  secretCode: "2017",
-  dateOfBirth: new Date(2007, 7, 2),
+  herName: "Uday Kiran",
+  secretCode: "2007",
+  dateOfBirth: new Date(2007, 9, 12),
   letter:
-    "Every moment spent with you feels like a precious gift that keeps giving back to my heart. Your kindness lights up the darkest days, and your smile reminds me why life is so beautifully worth living. On this special day, I want you to know that having you in this world makes everything brighter. May this year bring you infinite joy, unexpected adventures, and dreams that come true. Thank you for being the extraordinary soul that you are. You deserve nothing but the very best. With all my love and admiration ✨",
+    "Life is always more fun, more honest, and more memorable with a friend like you around. Thanks for every laugh, every random conversation, and every moment you have made brighter. On your birthday, I hope you get the happiness, adventures, and ridiculous amount of cake you deserve. Keep being the wonderfully unforgettable person you are. I am lucky to call you my friend. Cheers to another brilliant year together ✨",
 };
 
 const CODE_LENGTH = CONFIG.secretCode.length;
@@ -41,11 +41,11 @@ function generateSolvablePuzzle() {
 const INITIAL_PUZZLE = generateSolvablePuzzle();
 
 const WISHES = [
-  "May your smile always shine this bright ✨",
-  "You deserve every beautiful thing today 💖",
-  "May all your dreams find their way to you 🌟",
-  "Keep being the wonderfully amazing you 🌸",
-  "Here’s to a year full of love and laughter 🥂",
+  "May your year be packed with wins and inside jokes ✨",
+  "You deserve the best birthday snack in town 🎂",
+  "May every big plan and silly idea find you 🌟",
+  "Keep being the wonderfully chaotic you 🎉",
+  "Here’s to another year of laughs and adventures 🥂",
 ];
 const BALLOON_COLORS = ["#c78cff, #8a4eda", "#90f18b, #3cbf66", "#ffb1c4, #ed5b83", "#ffe88d, #efae35", "#ff9fca, #e34077"];
 
@@ -279,9 +279,9 @@ export default function Home() {
       <AnimatePresence mode="wait">
         {screen === 0 && (
           <Page key="0">
-            <div className="tiny">A LITTLE SOMETHING FOR YOU</div>
+            <div className="tiny">A LITTLE BIRTHDAY SURPRISE FOR MY FRIEND</div>
             <h1>Hey {CONFIG.herName}...</h1>
-            <p className="sub">I made something special for your birthday.</p>
+            <p className="sub">I made something special for my favorite birthday buddy.</p>
 
             <motion.button
               className="gift-box"
@@ -289,7 +289,7 @@ export default function Home() {
               whileTap={{ scale: 0.94 }}
               onClick={() => go(1)}
             >
-              <div className="gift-lid"><span>♡</span></div>
+              <div className="gift-lid"><span>✦</span></div>
               <div className="gift-body"><i /><b /></div>
             </motion.button>
 
@@ -301,13 +301,12 @@ export default function Home() {
 
         {screen === 1 && (
           <Page key="1">
-            <div className="lock">♡</div>
-            <div className="tiny">ONLY YOU CAN ENTER</div>
-            <h2>A tiny secret...</h2>
-            <p className="sub">Enter the four-digit code.</p>
-            <div className="code-tease" aria-label="A playful hint">
-              <span>Ok, Fine 😌</span>
-              <span>Dhobhey 😜</span>
+            <div className="lock">🔐</div>
+            <div className="tiny">ONLY MY FRIEND CAN ENTER</div>
+            <h2>Best friend access...</h2>
+            <p className="sub">Enter the secret code only my best friend would know.</p>
+            <div className="friend-badge" aria-label="Best friend access">
+              <span>✦</span> BEST FRIEND ACCESS <span>✦</span>
             </div>
 
             <div className="dots">
@@ -323,7 +322,7 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            {wrong && <div className="wrong">Not that one... try again ❤️</div>}
+            {wrong && <div className="wrong">Nope, bestie... try again 🎯</div>}
           </Page>
         )}
 
@@ -334,16 +333,16 @@ export default function Home() {
             <div className="curtain-swag" aria-hidden="true" />
             <div className="reveal-content">
               <div className="tiny">THE SPOTLIGHT IS ALL YOURS</div>
-              <p className="reveal-kicker">POV: IT&apos;S HER BIRTHDAY</p>
-              <h1 className="birthday">Happy Birthday<br /><em>{CONFIG.herName}</em> ❤️</h1>
+              <p className="reveal-kicker">POV: IT&apos;S YOUR BIRTHDAY</p>
+              <h1 className="birthday">Happy Birthday<br /><em>{CONFIG.herName}</em> 🎉</h1>
               <div className="cake">
                 <div className="candle"><span>✦</span></div>
                 <div className="icing" />
                 <div className="cake-base" />
                 <div className="plate" />
               </div>
-              <p className="sub">May your day be as beautiful as your smile.</p>
-              <button className="pink-btn" onClick={() => go(3)}>OPEN THE CELEBRATION ✨</button>
+              <p className="sub">May your day be as fun, bright, and unforgettable as you are.</p>
+              <button className="pink-btn" onClick={() => go(3)}>START THE FRIENDSHIP FEST ✨</button>
             </div>
           </Page>
         )}
@@ -354,9 +353,9 @@ export default function Home() {
             <div className="clock-ribbon ribbon-two" aria-hidden="true" />
             <div className="clock-content">
               <div className="tiny">A DAY WORTH CELEBRATING</div>
-              <h2>Happy Birthday<br /><em>{CONFIG.herName}</em> 👑</h2>
-              <p className="born-on">Born on 02 August 2007</p>
-              <p className="clock-intro">The world has been brighter for</p>
+              <h2>Happy Birthday<br /><em>{CONFIG.herName}</em> 🌟</h2>
+              <p className="born-on">Born on 12 October 2007</p>
+              <p className="clock-intro">The world, and my friend group, has been brighter for</p>
               <div className="birthday-stats" aria-label="Time since birth">
                 {Object.entries(birthdayStats).map(([label, value]) => (
                   <div key={label}>
@@ -374,18 +373,18 @@ export default function Home() {
                 <div className="cake-plate" />
               </div>
               <p className="blow-note">MAKE A WISH AND BLOW THE CANDLES ✨</p>
-              <button className="pink-btn" onClick={() => go(4)}>CONTINUE THE PARTY →</button>
+              <button className="pink-btn" onClick={() => go(4)}>UNLOCK THE FRIENDSHIP FUN →</button>
             </div>
           </Page>
         )}
 
         {screen === 4 && (
           <Page key="4" className="photo-puzzle-page">
-            <div className="tiny">A SPECIAL MEMORY</div>
-            <h2>Birthday Puzzle 🧩</h2>
-            <p className="sub">Drag the pieces to slide them into place.</p>
+            <div className="tiny">A SPECIAL FRIENDSHIP MEMORY</div>
+            <h2>Piece Together the Fun 🧩</h2>
+            <p className="sub">Drag the pieces into place to reveal one of our memories.</p>
             <div className="puzzle-reference">
-              <img src="/photos/photo1.jpg" alt="Reference for the completed photo puzzle" />
+              <img src="/photos/photo2.jpeg" alt="Reference for the completed photo puzzle" />
               <span>REFERENCE PHOTO</span>
             </div>
             <div className="puzzle-progress">
@@ -413,7 +412,7 @@ export default function Home() {
               ))}
             </div>
             {puzzleSolved ? (
-              <button className="pink-btn" onClick={() => go(5)}>PICTURE PERFECT →</button>
+              <button className="pink-btn" onClick={() => go(5)}>MEMORY UNLOCKED →</button>
             ) : (
               <div className="puzzle-actions">
                 <button
@@ -435,9 +434,9 @@ export default function Home() {
 
         {screen === 5 && (
           <Page key="5" className="wish-page">
-            <div className="tiny">A LITTLE WISH FOR YOU</div>
-            <h2>Pop the Wishes 🎈</h2>
-            <p className="sub">Tap each balloon to reveal a little birthday wish.</p>
+            <div className="tiny">A LITTLE WISH FROM YOUR FRIEND</div>
+            <h2>Pop the Birthday Wishes 🎈</h2>
+            <p className="sub">Tap each balloon for a tiny wish from your birthday crew.</p>
             <AnimatePresence mode="wait">
               {wishMessage && (
                 <motion.p
@@ -479,9 +478,9 @@ export default function Home() {
 
         {screen === 6 && (
           <Page key="6">
-            <div className="tiny">OUR MEMORIES</div>
-            <h2>A little piece of us 🧩</h2>
-            <p className="sub">Tap the cards and reveal the memories.</p>
+            <div className="tiny">OUR FRIENDSHIP ARCHIVE</div>
+            <h2>A little piece of our chaos 🧩</h2>
+            <p className="sub">Tap the cards to revisit some of our best memories.</p>
 
             <div className="photo-grid">
               {PHOTOS.map((src, i) => (
@@ -521,9 +520,9 @@ export default function Home() {
 
         {screen === 7 && (
           <Page key="7">
-            <div className="tiny">JUST FOR YOU</div>
+            <div className="tiny">JUST FOR MY FAVORITE FRIEND</div>
             <h2>There is a message hidden here...</h2>
-            <p className="sub">Scratch the card to reveal your message.</p>
+            <p className="sub">Scratch the card to reveal a birthday note from your friend.</p>
 
             <div className="scratch-card-container">
               <div className="scratch-content">
@@ -551,11 +550,11 @@ export default function Home() {
         {screen === 8 && (
           <Page key="8">
             <div className="letter">
-              <div className="tiny">A LETTER FOR YOU</div>
+              <div className="tiny">A NOTE FROM YOUR FRIEND</div>
               <h2>Happy Birthday ✨</h2>
               <div className="rule" />
               <p>{CONFIG.letter}</p>
-              <p className="hand">With lots of love,<br />from me 🌸</p>
+              <p className="hand">Your friend for all the adventures,<br />always 🎉</p>
             </div>
             <button className="outline-btn" onClick={() => go(0)}>START AGAIN ↻</button>
           </Page>
