@@ -12,8 +12,8 @@ const PHOTOS = [
 
 const CONFIG = {
   herName: "Uday Kiran",
-  secretCode: "2007",
-  dateOfBirth: new Date(2007, 9, 12),
+  secretCode: "1319",
+  dateOfBirth: new Date(2006, 8, 13),
   letter:
     "Life is always more fun, more honest, and more memorable with a friend like you around. Thanks for every laugh, every random conversation, and every moment you have made brighter. On your birthday, I hope you get the happiness, adventures, and ridiculous amount of cake you deserve. Keep being the wonderfully unforgettable person you are. I am lucky to call you my friend. Cheers to another brilliant year together ✨",
 };
@@ -354,7 +354,7 @@ export default function Home() {
             <div className="clock-content">
               <div className="tiny">A DAY WORTH CELEBRATING</div>
               <h2>Happy Birthday<br /><em>{CONFIG.herName}</em> 🌟</h2>
-              <p className="born-on">Born on 12 October 2007</p>
+              <p className="born-on">Born on 13 September 2007</p>
               <p className="clock-intro">The world, and my friend group, has been brighter for</p>
               <div className="birthday-stats" aria-label="Time since birth">
                 {Object.entries(birthdayStats).map(([label, value]) => (
@@ -384,7 +384,7 @@ export default function Home() {
             <h2>Piece Together the Fun 🧩</h2>
             <p className="sub">Drag the pieces into place to reveal one of our memories.</p>
             <div className="puzzle-reference">
-              <img src="/photos/photo2.jpeg" alt="Reference for the completed photo puzzle" />
+              <img src="/photos/photo1.jpeg" alt="Reference for the completed photo puzzle" />
               <span>REFERENCE PHOTO</span>
             </div>
             <div className="puzzle-progress">
